@@ -1,0 +1,481 @@
+{
+  "case": {
+    "slug": "the-midnight-gallery",
+    "title": "The Midnight Gallery",
+    "briefing": "At 11:47 PM, curator Adrian Vale was found unconscious in the locked restoration room while The Hollow Star vanished. Determine the attacker, the thief, and the motive before your actions run out.",
+    "max_actions": 18,
+    "canonical_answer": {
+      "attacker_slug": "celeste-vale",
+      "thief_slug": "marina-crowe",
+      "motive": "protect family debt secrets and force insurance leverage",
+      "required_clue_slugs": [
+        "restoration-key-imprint",
+        "dock-delivery-log",
+        "glove-fiber-amber",
+        "camera-loop-gap"
+      ]
+    }
+  },
+  "locations": [
+    {
+      "slug": "main-gallery",
+      "name": "Main Gallery",
+      "description": "Silent exhibition hall with reflective marble and velvet ropes.",
+      "unlock_rule": null
+    },
+    {
+      "slug": "restoration-room",
+      "name": "Restoration Room",
+      "description": "Locked workspace where Adrian was found.",
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "security-shift-ledger"
+      }
+    },
+    {
+      "slug": "security-office",
+      "name": "Security Office",
+      "description": "Monitors, access logs, and archived camera loops.",
+      "unlock_rule": null
+    },
+    {
+      "slug": "loading-dock",
+      "name": "Loading Dock",
+      "description": "Service entrance with late-night delivery routes.",
+      "unlock_rule": {
+        "op": "and",
+        "rules": [
+          {
+            "op": "visited_location",
+            "location": "main-gallery"
+          },
+          {
+            "op": "has_clue",
+            "clue": "freight-elevator-smudge"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "archives-wing",
+      "name": "Archives Wing",
+      "description": "Document storage and old appraisals.",
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "torn-insurance-rider"
+      }
+    }
+  ],
+  "suspects": [
+    {
+      "slug": "marina-crowe",
+      "full_name": "Marina Crowe",
+      "age": 44,
+      "occupation": "Gallery co-owner",
+      "public_bio": "Elegant co-owner known for expansion deals and donor dinners.",
+      "speech_style": "Measured, strategic, polished",
+      "personality_traits": ["charismatic", "calculating", "image-conscious"],
+      "relationship_to_victim": "Business partner and occasional rival",
+      "public_motive": "Dispute over curatorial control",
+      "hidden_motive": "Needed insurance leverage while hiding failing loans",
+      "initial_alibi": "Claims she left at 11:20 PM for a donor call",
+      "true_timeline": [
+        {"time": "11:25", "event": "Entered security corridor"},
+        {"time": "11:36", "event": "Met Celeste near service stairwell"},
+        {"time": "11:49", "event": "Moved crate tag toward dock"}
+      ],
+      "known_facts": ["fact-marina-donor-call-fake", "fact-marina-dock-transfer"],
+      "secret_facts": ["fact-marina-thief"],
+      "allowed_lies": ["She can deny being near dock", "She can blame camera outage on IT"],
+      "forbidden_knowledge": ["exact_canonical_answer", "scoring_rules"],
+      "trust_thresholds": {
+        "unlock_rule": null,
+        "admit_minor": 60
+      },
+      "pressure_thresholds": {
+        "panic": 75,
+        "deflect": 45
+      },
+      "confront_responses": {
+        "dock-delivery-log": "The log is incomplete. Anyone could have written that line.",
+        "camera-loop-gap": "A missing feed is not a confession."
+      },
+      "topic_unlock_rules": [
+        {"topic": "insurance-rider", "rule": {"op": "has_clue", "clue": "torn-insurance-rider"}}
+      ],
+      "portrait_palette": {"bg": "#223244", "fg": "#f3e7d0"}
+    },
+    {
+      "slug": "jonah-pryce",
+      "full_name": "Jonah Pryce",
+      "age": 37,
+      "occupation": "Restoration specialist",
+      "public_bio": "Meticulous conservator with a strict process.",
+      "speech_style": "Technical and exact",
+      "personality_traits": ["precise", "anxious", "principled"],
+      "relationship_to_victim": "Trusted by Adrian for delicate works",
+      "public_motive": "Resented deadlines and credit disputes",
+      "hidden_motive": "Wanted to expose fake provenance rumors",
+      "initial_alibi": "Says he was calibrating solvents in the lab annex",
+      "true_timeline": [
+        {"time": "11:30", "event": "In lab annex"},
+        {"time": "11:42", "event": "Saw someone in amber gloves"},
+        {"time": "11:50", "event": "Called medic"}
+      ],
+      "known_facts": ["fact-amber-gloves", "fact-restoration-lock-click"],
+      "secret_facts": ["fact-jonah-hid-ledger-copy"],
+      "allowed_lies": ["Can hide he duplicated a key imprint"],
+      "forbidden_knowledge": ["exact_canonical_answer"],
+      "trust_thresholds": {
+        "unlock_rule": null,
+        "admit_minor": 58
+      },
+      "pressure_thresholds": {
+        "panic": 70,
+        "deflect": 52
+      },
+      "confront_responses": {
+        "restoration-key-imprint": "I made that imprint to test lock wear, nothing more."
+      },
+      "topic_unlock_rules": [
+        {"topic": "amber-gloves", "rule": {"op": "has_clue", "clue": "glove-fiber-amber"}}
+      ],
+      "portrait_palette": {"bg": "#2b3648", "fg": "#f0dfbd"}
+    },
+    {
+      "slug": "darius-holt",
+      "full_name": "Darius Holt",
+      "age": 51,
+      "occupation": "Security supervisor",
+      "public_bio": "Former patrol officer running gallery security protocol.",
+      "speech_style": "Direct and procedural",
+      "personality_traits": ["disciplined", "stubborn", "protective"],
+      "relationship_to_victim": "Professional friction over access exceptions",
+      "public_motive": "Felt undermined by Adrian's override requests",
+      "hidden_motive": "Covered policy violations to keep his job",
+      "initial_alibi": "Claims he was verifying alarm sectors in the office",
+      "true_timeline": [
+        {"time": "11:28", "event": "In office reviewing feed"},
+        {"time": "11:41", "event": "Disabled one camera channel"},
+        {"time": "11:53", "event": "Returned and restarted feed"}
+      ],
+      "known_facts": ["fact-camera-loop-manual", "fact-shift-ledger-edited"],
+      "secret_facts": ["fact-darius-accepted-cash"],
+      "allowed_lies": ["Can claim software glitch caused loop"],
+      "forbidden_knowledge": ["ending_thresholds"],
+      "trust_thresholds": {
+        "unlock_rule": {"op": "has_clue", "clue": "camera-loop-gap"},
+        "admit_minor": 62
+      },
+      "pressure_thresholds": {
+        "panic": 78,
+        "deflect": 44
+      },
+      "confront_responses": {
+        "camera-loop-gap": "I looped the feed to stop panic, not to help a thief."
+      },
+      "topic_unlock_rules": [
+        {"topic": "camera-loop", "rule": {"op": "has_clue", "clue": "camera-loop-gap"}}
+      ],
+      "portrait_palette": {"bg": "#25303a", "fg": "#f4e9cc"}
+    },
+    {
+      "slug": "lyra-quinn",
+      "full_name": "Lyra Quinn",
+      "age": 29,
+      "occupation": "Investigative journalist",
+      "public_bio": "Culture desk reporter following high-value private sales.",
+      "speech_style": "Sharp, fast, probing",
+      "personality_traits": ["curious", "bold", "observant"],
+      "relationship_to_victim": "Source and occasional critic",
+      "public_motive": "Wanted a scandal headline",
+      "hidden_motive": "Chased proof of insurance manipulation",
+      "initial_alibi": "Says she was outside filing notes from the curb",
+      "true_timeline": [
+        {"time": "11:33", "event": "Near loading dock gate"},
+        {"time": "11:45", "event": "Photographed a van plate"},
+        {"time": "11:56", "event": "Phoned editor"}
+      ],
+      "known_facts": ["fact-van-plate", "fact-marina-urgent-call"],
+      "secret_facts": ["fact-lyra-bought-leak"],
+      "allowed_lies": ["Can hide paying for a tip"],
+      "forbidden_knowledge": ["secret_facts_other_suspects"],
+      "trust_thresholds": {
+        "unlock_rule": {"op": "visited_location", "location": "loading-dock"},
+        "admit_minor": 55
+      },
+      "pressure_thresholds": {
+        "panic": 68,
+        "deflect": 50
+      },
+      "confront_responses": {
+        "van-plate-note": "That note is mine, but I did not move the painting."
+      },
+      "topic_unlock_rules": [
+        {"topic": "van-route", "rule": {"op": "has_clue", "clue": "van-plate-note"}}
+      ],
+      "portrait_palette": {"bg": "#1f3242", "fg": "#f5e6c8"}
+    },
+    {
+      "slug": "celeste-vale",
+      "full_name": "Celeste Vale",
+      "age": 41,
+      "occupation": "Adrian's estranged sibling",
+      "public_bio": "Former estate manager distanced from gallery affairs.",
+      "speech_style": "Cold, restrained, occasionally brittle",
+      "personality_traits": ["guarded", "proud", "resentful"],
+      "relationship_to_victim": "Sibling conflict over inheritance",
+      "public_motive": "Resentment over family trust control",
+      "hidden_motive": "Struck Adrian during argument over debt exposure",
+      "initial_alibi": "Claims she never entered staff zones",
+      "true_timeline": [
+        {"time": "11:34", "event": "Entered service stairwell"},
+        {"time": "11:47", "event": "Confronted Adrian in restoration room"},
+        {"time": "11:48", "event": "Left in panic"}
+      ],
+      "known_facts": ["fact-celeste-argument", "fact-celeste-ring-scuff"],
+      "secret_facts": ["fact-celeste-attacker"],
+      "allowed_lies": ["Can deny seeing Adrian"],
+      "forbidden_knowledge": ["is_guilty_flags"],
+      "trust_thresholds": {
+        "unlock_rule": {"op": "has_clue", "clue": "ring-scuff-mark"},
+        "admit_minor": 63
+      },
+      "pressure_thresholds": {
+        "panic": 80,
+        "deflect": 46
+      },
+      "confront_responses": {
+        "ring-scuff-mark": "That mark could be from anyone wearing jewelry."
+      },
+      "topic_unlock_rules": [
+        {"topic": "family-debt", "rule": {"op": "has_clue", "clue": "family-debt-ledger"}}
+      ],
+      "portrait_palette": {"bg": "#2f2940", "fg": "#f0ddc0"}
+    }
+  ],
+  "clues": [
+    {
+      "slug": "security-shift-ledger",
+      "title": "Security Shift Ledger",
+      "description": "Hand-corrected guard log with erased entries between 11:35 and 11:50.",
+      "location_slug": "security-office",
+      "tags": ["security", "timeline"],
+      "unlock_rule": null,
+      "is_red_herring": false
+    },
+    {
+      "slug": "camera-loop-gap",
+      "title": "Camera Loop Gap",
+      "description": "A 9-minute repeated camera segment from corridor C.",
+      "location_slug": "security-office",
+      "tags": ["security", "video"],
+      "unlock_rule": null,
+      "is_red_herring": false
+    },
+    {
+      "slug": "freight-elevator-smudge",
+      "title": "Freight Elevator Smudge",
+      "description": "Amber glove residue on freight controls.",
+      "location_slug": "main-gallery",
+      "tags": ["forensic"],
+      "unlock_rule": null,
+      "is_red_herring": false
+    },
+    {
+      "slug": "guestbook-signed-sable",
+      "title": "Guestbook Signature Sable",
+      "description": "A flamboyant signature tied to a known art blogger.",
+      "location_slug": "main-gallery",
+      "tags": ["red-herring"],
+      "unlock_rule": null,
+      "is_red_herring": true
+    },
+    {
+      "slug": "restoration-key-imprint",
+      "title": "Restoration Key Imprint",
+      "description": "Wax cast of the restoration key profile hidden in a drawer.",
+      "location_slug": "restoration-room",
+      "tags": ["access", "lock"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "security-shift-ledger"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "ring-scuff-mark",
+      "title": "Ring Scuff Mark",
+      "description": "Fresh arc-shaped scratch on metal cabinet edge at elbow height.",
+      "location_slug": "restoration-room",
+      "tags": ["forensic"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "restoration-key-imprint"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "glove-fiber-amber",
+      "title": "Amber Fiber Threads",
+      "description": "Threads matching custom archive gloves near fallen stool.",
+      "location_slug": "restoration-room",
+      "tags": ["forensic", "timeline"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "camera-loop-gap"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "dock-delivery-log",
+      "title": "Dock Delivery Log",
+      "description": "Unsigned midnight transfer note with coded crate marker HS-7.",
+      "location_slug": "loading-dock",
+      "tags": ["shipping"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "freight-elevator-smudge"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "van-plate-note",
+      "title": "Van Plate Note",
+      "description": "Reporter shorthand with partial plate and route arrow.",
+      "location_slug": "loading-dock",
+      "tags": ["witness"],
+      "unlock_rule": null,
+      "is_red_herring": false
+    },
+    {
+      "slug": "coffee-stain-receipt",
+      "title": "Coffee Stain Receipt",
+      "description": "Cafe receipt from a barista two blocks away stamped 11:41 PM.",
+      "location_slug": "loading-dock",
+      "tags": ["red-herring"],
+      "unlock_rule": null,
+      "is_red_herring": true
+    },
+    {
+      "slug": "torn-insurance-rider",
+      "title": "Torn Insurance Rider",
+      "description": "Fragment showing increased valuation clause activated this week.",
+      "location_slug": "archives-wing",
+      "tags": ["financial", "motive"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "camera-loop-gap"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "family-debt-ledger",
+      "title": "Family Debt Ledger",
+      "description": "Private ledger connecting Vale family debt to a maturing loan.",
+      "location_slug": "archives-wing",
+      "tags": ["motive", "family"],
+      "unlock_rule": {
+        "op": "has_clue",
+        "clue": "torn-insurance-rider"
+      },
+      "is_red_herring": false
+    },
+    {
+      "slug": "unsigned-love-note",
+      "title": "Unsigned Love Note",
+      "description": "Poetic scrap with no direct ties to crime.",
+      "location_slug": "archives-wing",
+      "tags": ["red-herring"],
+      "unlock_rule": null,
+      "is_red_herring": true
+    }
+  ],
+  "facts": [
+    {"slug": "fact-marina-donor-call-fake", "text": "Marina's donor call was never connected.", "visibility_rule": null},
+    {"slug": "fact-marina-dock-transfer", "text": "Marina handled a crate marker tied to Hollow Star.", "visibility_rule": null},
+    {"slug": "fact-marina-thief", "text": "Marina orchestrated removal of The Hollow Star.", "visibility_rule": {"op": "and", "rules": [{"op": "has_clue", "clue": "dock-delivery-log"}, {"op": "has_clue", "clue": "camera-loop-gap"}]}},
+    {"slug": "fact-amber-gloves", "text": "Jonah saw amber archive gloves near restoration controls.", "visibility_rule": null},
+    {"slug": "fact-restoration-lock-click", "text": "The restoration lock was re-engaged from outside.", "visibility_rule": null},
+    {"slug": "fact-jonah-hid-ledger-copy", "text": "Jonah hid a copy of the security ledger.", "visibility_rule": null},
+    {"slug": "fact-camera-loop-manual", "text": "Darius manually looped corridor camera feed.", "visibility_rule": null},
+    {"slug": "fact-shift-ledger-edited", "text": "Darius edited shift logs post-incident.", "visibility_rule": null},
+    {"slug": "fact-darius-accepted-cash", "text": "Darius accepted hush money months earlier.", "visibility_rule": null},
+    {"slug": "fact-van-plate", "text": "Lyra noted a van linked to a private broker.", "visibility_rule": null},
+    {"slug": "fact-marina-urgent-call", "text": "Lyra overheard Marina mention 'coverage' and 'deadline'.", "visibility_rule": null},
+    {"slug": "fact-lyra-bought-leak", "text": "Lyra paid a guard for a lead.", "visibility_rule": null},
+    {"slug": "fact-celeste-argument", "text": "Celeste argued with Adrian shortly before 11:47.", "visibility_rule": null},
+    {"slug": "fact-celeste-ring-scuff", "text": "Cabinet scuff arc matches Celeste's ring profile.", "visibility_rule": {"op": "has_clue", "clue": "ring-scuff-mark"}},
+    {"slug": "fact-celeste-attacker", "text": "Celeste struck Adrian during a debt confrontation.", "visibility_rule": {"op": "has_clue", "clue": "family-debt-ledger"}}
+  ],
+  "topics": [
+    {"slug": "timeline-gap", "title": "Timeline Gap", "unlock_rule": null},
+    {"slug": "camera-loop", "title": "Camera Loop", "unlock_rule": {"op": "has_clue", "clue": "camera-loop-gap"}},
+    {"slug": "insurance-rider", "title": "Insurance Rider", "unlock_rule": {"op": "has_clue", "clue": "torn-insurance-rider"}},
+    {"slug": "family-debt", "title": "Family Debt", "unlock_rule": {"op": "has_clue", "clue": "family-debt-ledger"}},
+    {"slug": "van-route", "title": "Van Route", "unlock_rule": {"op": "has_clue", "clue": "van-plate-note"}}
+  ],
+  "contradictions": [
+    {
+      "slug": "marina-call-contradiction",
+      "title": "The Missing Donor Call",
+      "description": "Marina insists she was on a donor call, but records show no connection.",
+      "trigger_rule": {
+        "suspect": "marina-crowe",
+        "requires_clue": "camera-loop-gap",
+        "keyword": "call",
+        "requires_possible_flag": false
+      }
+    },
+    {
+      "slug": "darius-loop-contradiction",
+      "title": "Manual Loop Admission",
+      "description": "Darius calls it a glitch despite manual loop controls being used.",
+      "trigger_rule": {
+        "suspect": "darius-holt",
+        "requires_clue": "camera-loop-gap",
+        "keyword": "glitch",
+        "requires_possible_flag": true
+      }
+    },
+    {
+      "slug": "jonah-key-contradiction",
+      "title": "Key Imprint Denial",
+      "description": "Jonah denies duplicating access despite wax imprint evidence.",
+      "trigger_rule": {
+        "suspect": "jonah-pryce",
+        "requires_clue": "restoration-key-imprint",
+        "keyword": "key",
+        "requires_possible_flag": false
+      }
+    },
+    {
+      "slug": "lyra-curb-contradiction",
+      "title": "Curbside Claim Conflict",
+      "description": "Lyra claims she stayed outside, but her note places her at dock gate.",
+      "trigger_rule": {
+        "suspect": "lyra-quinn",
+        "requires_clue": "van-plate-note",
+        "keyword": "outside",
+        "requires_possible_flag": false
+      }
+    },
+    {
+      "slug": "celeste-zone-contradiction",
+      "title": "Staff Zone Entry",
+      "description": "Celeste denies entering staff areas despite ring scuff and timeline overlap.",
+      "trigger_rule": {
+        "suspect": "celeste-vale",
+        "requires_clue": "ring-scuff-mark",
+        "keyword": "never entered",
+        "requires_possible_flag": false
+      }
+    }
+  ],
+  "endings": [
+    {"slug": "truth-unveiled", "title": "Truth Unveiled", "summary": "You untangled attack, theft, and motive with decisive evidence.", "min_score": 90},
+    {"slug": "close-but-clouded", "title": "Close But Clouded", "summary": "Your accusation was strong, but one thread remained uncertain.", "min_score": 70},
+    {"slug": "frayed-case", "title": "Frayed Case", "summary": "You found fragments of truth but missed key links.", "min_score": 45},
+    {"slug": "cold-trail", "title": "Cold Trail", "summary": "The gallery reopens under doubt as the truth slips away.", "min_score": 0}
+  ]
+}
