@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +29,7 @@ export default function AccusePage() {
   const params = useParams<{ investigationId: string }>();
   const id = Number(params.investigationId);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const suspects = useQuery({ queryKey: ["suspects", id], queryFn: () => api.suspects(id) });
   const clues = useQuery({ queryKey: ["clues", id], queryFn: () => api.clues(id) });
@@ -44,7 +45,8 @@ export default function AccusePage() {
         supporting_clues: [values.supporting1, values.supporting2],
         explanation: values.explanation
       }),
-    onSuccess: () => {
+    onSuccess: (result) => {
+      queryClient.setQueryData(["result", id], result);
       toast.success("Accusation submitted.");
       router.push(`/investigation/${id}/result`);
     },

@@ -9,8 +9,7 @@ import { appConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { href: "/dashboard", label: "Dashboard", icon: Home },
-  { href: "/investigation", label: "HQ", icon: Search },
+  { href: "/dashboard", label: "Dashboard / HQ", icon: Home },
   { href: "/locations", label: "Locations", icon: Map },
   { href: "/suspects", label: "Suspects", icon: Users },
   { href: "/notes", label: "Notes", icon: NotebookPen },

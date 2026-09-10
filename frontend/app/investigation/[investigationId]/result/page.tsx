@@ -13,14 +13,19 @@ export default function ResultPage() {
   const params = useParams<{ investigationId: string }>();
   const id = Number(params.investigationId);
   const result = useQuery({ queryKey: ["result", id], queryFn: () => api.result(id) });
+  const verdict = result.data ? (result.data.score >= 70 ? "Correct accusation" : "Wrong accusation") : null;
 
   return (
     <AuthGuard>
       <AppShell investigationId={params.investigationId}>
         <Panel title="Case Ending">
           {result.isLoading ? <p>Scoring accusation...</p> : null}
+          {result.isError ? (
+            <p className="text-noir-danger">{result.error instanceof Error ? result.error.message : "Could not load result."}</p>
+          ) : null}
           {result.data ? (
             <>
+              <p className="text-sm uppercase tracking-[0.2em] text-noir-amber/90">{verdict}</p>
               <h1 className="text-4xl">{result.data.ending_title}</h1>
               <p className="mt-2 text-white/80">{result.data.ending_summary}</p>
               <p className="mt-3 text-xl text-noir-amber">Score: {result.data.score}</p>
@@ -29,9 +34,9 @@ export default function ResultPage() {
                 <Link href="/investigation/new" className="rounded-lg border border-white/20 px-3 py-2">Start New Game</Link>
               </div>
             </>
-          ) : (
+          ) : !result.isError ? (
             <p>No result yet. Submit your accusation first.</p>
-          )}
+          ) : null}
         </Panel>
       </AppShell>
     </AuthGuard>
