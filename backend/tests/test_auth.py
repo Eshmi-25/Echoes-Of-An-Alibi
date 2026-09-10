@@ -1,8 +1,7 @@
-from tests.conftest import auth_headers, get_client
+from tests.conftest import auth_headers
 
 
-def test_register_and_login():
-    client = get_client()
+def test_register_and_login(client):
     r = client.post(
         "/api/auth/register",
         json={"username": "alpha", "email": "alpha@example.com", "password": "Secret123!"},
@@ -17,8 +16,7 @@ def test_register_and_login():
     assert "access_token" in l.json()
 
 
-def test_invalid_credentials():
-    client = get_client()
+def test_invalid_credentials(client):
     client.post(
         "/api/auth/register",
         json={"username": "beta", "email": "beta@example.com", "password": "Secret123!"},
@@ -30,8 +28,7 @@ def test_invalid_credentials():
     assert l.status_code == 401
 
 
-def test_protected_route_access():
-    client = get_client()
+def test_protected_route_access(client):
     res = client.get("/api/cases")
     assert res.status_code == 401
 

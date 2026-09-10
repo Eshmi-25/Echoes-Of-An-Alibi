@@ -1,4 +1,4 @@
-from tests.conftest import auth_headers, get_client
+from tests.conftest import auth_headers
 
 
 def _start(client, headers):
@@ -7,8 +7,7 @@ def _start(client, headers):
     return inv["id"]
 
 
-def test_new_investigation_initialization_and_search_consumes_action_once():
-    client = get_client()
+def test_new_investigation_initialization_and_search_consumes_action_once(client):
     headers = auth_headers(client, "loc1", "loc1@example.com")
     inv_id = _start(client, headers)
 
@@ -25,8 +24,7 @@ def test_new_investigation_initialization_and_search_consumes_action_once():
     assert after == before - 1
 
 
-def test_location_unlocking():
-    client = get_client()
+def test_location_unlocking(client):
     headers = auth_headers(client, "loc2", "loc2@example.com")
     inv_id = _start(client, headers)
 

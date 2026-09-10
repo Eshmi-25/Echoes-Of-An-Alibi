@@ -1,4 +1,4 @@
-from tests.conftest import auth_headers, get_client
+from tests.conftest import auth_headers
 
 
 def _start(client, headers):
@@ -7,8 +7,7 @@ def _start(client, headers):
     return inv["id"]
 
 
-def test_trust_pressure_and_contradiction_detection():
-    client = get_client()
+def test_trust_pressure_and_contradiction_detection(client):
     headers = auth_headers(client, "eng1", "eng1@example.com")
     inv_id = _start(client, headers)
 
@@ -24,8 +23,7 @@ def test_trust_pressure_and_contradiction_detection():
     assert contradictions.status_code == 200
 
 
-def test_duplicate_search_safety():
-    client = get_client()
+def test_duplicate_search_safety(client):
     headers = auth_headers(client, "eng2", "eng2@example.com")
     inv_id = _start(client, headers)
 

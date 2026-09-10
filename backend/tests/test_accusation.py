@@ -1,4 +1,4 @@
-from tests.conftest import auth_headers, get_client
+from tests.conftest import auth_headers
 
 
 def _start(client, headers):
@@ -14,8 +14,7 @@ def _collect_core_clues(client, headers, inv_id):
     client.post(f"/api/investigations/{inv_id}/locations/loading-dock/search", headers=headers)
 
 
-def test_correct_accusation():
-    client = get_client()
+def test_correct_accusation(client):
     headers = auth_headers(client, "acc1", "acc1@example.com")
     inv_id = _start(client, headers)
     _collect_core_clues(client, headers, inv_id)
@@ -35,8 +34,7 @@ def test_correct_accusation():
     assert res.json()["score"] >= 70
 
 
-def test_wrong_accusation():
-    client = get_client()
+def test_wrong_accusation(client):
     headers = auth_headers(client, "acc2", "acc2@example.com")
     inv_id = _start(client, headers)
     _collect_core_clues(client, headers, inv_id)

@@ -1,4 +1,4 @@
-from tests.conftest import auth_headers, get_client
+from tests.conftest import auth_headers
 
 
 def _start(client, headers):
@@ -7,8 +7,7 @@ def _start(client, headers):
     return inv["id"]
 
 
-def test_prompt_injection_like_input_handled():
-    client = get_client()
+def test_prompt_injection_like_input_handled(client):
     headers = auth_headers(client, "dlg1", "dlg1@example.com")
     inv_id = _start(client, headers)
     res = client.post(
@@ -20,8 +19,7 @@ def test_prompt_injection_like_input_handled():
     assert "canonical" not in res.json()["content"].lower()
 
 
-def test_message_length_limit():
-    client = get_client()
+def test_message_length_limit(client):
     headers = auth_headers(client, "dlg2", "dlg2@example.com")
     inv_id = _start(client, headers)
     msg = "x" * 700
