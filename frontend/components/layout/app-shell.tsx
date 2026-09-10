@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { Home, Map, NotebookPen, Scale, Search, Users } from "lucide-react";
+import { Home, Map, NotebookPen, Scale, Users } from "lucide-react";
 
 import { appConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
